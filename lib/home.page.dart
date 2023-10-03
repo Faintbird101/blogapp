@@ -1,12 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
-
-import 'package:currency_api_converter/constants/uri.constats.dart';
 import 'package:currency_api_converter/logic/response/response.dart';
 import 'package:currency_api_converter/models/album.dart';
 import 'package:currency_api_converter/widgets/article.tile.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,8 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Everything> products = [];
-
   late Future<Album> futureAlbum;
   late Future<Everything> futureNews;
   late Future<List<Images>> futureImages;
@@ -37,7 +31,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fetched data Sample'),
-        elevation: 3,
+        // elevation: 3,
       ),
       body: Center(
           child: FutureBuilder<Everything>(
@@ -55,17 +49,10 @@ class _HomePageState extends State<HomePage> {
                   description: image.description!,
                   imageUrl: image.urlToImage!,
                   thumbnailUrl: image.publishedAt!,
+                  author: image.author,
                 );
               },
             );
-            // buildPosts(data);
-            // buildArticles(data);
-            // return ArticleWidget(
-            //   title: data.title,
-            //   description: data.thumbnailUrl,
-            //   imageUrl: data.url,
-            //   thumbnailUrl: data.thumbnailUrl,
-            // );
           } else if (snapshot.hasError) {
             log('${snapshot.error}');
             return IconButton(onPressed: () {}, icon: Icon(Icons.refresh));
@@ -76,61 +63,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-Widget buildPosts(List<Images> images) {
-  return ListView.builder(
-    itemCount: images.length,
-    itemBuilder: (context, index) {
-      final image = images[index];
-      return ArticleWidget(
-        title: image.title,
-        description: image.thumbnailUrl,
-        imageUrl: image.url,
-        thumbnailUrl: image.thumbnailUrl,
-      );
-    },
-  );
-}
-
-// Widget buildNews(List<Everything> news) {
-//   return ListView.builder(
-//     itemCount: news.length,
-//     itemBuilder: (context, index) {
-//       final mohoro = news[index];
-//       return ArticleWidget(
-//         title: mohoro.title,
-//         description: mohoro.thumbnailUrl,
-//         imageUrl: mohoro.url,
-//         thumbnailUrl: mohoro.thumbnailUrl,
-//       );
-//     },
-//   );
-// }
-
-// Widget buildArticles(List<ArticleModel> article) {
-//   return ListView.builder(
-//     itemCount: article.length,
-//     itemBuilder: (context, index) {
-//       final image = article[index];
-//       return ArticleWidget(
-//         title: image.title,
-//         description: image.description,
-//         imageUrl: image.url,
-//         thumbnailUrl: image.publishedAt,
-//       );
-//     },
-//   );
-// }
-
-// Future refresh() async {
-//   final url = Uri.parse(articleUrl);
-//   final response = await http.get(url);
-
-//   final List article = json.decode(response.body);
-
-//   if (response.statusCode == 200) {
-//     return article.map((e) => art.fromJson(e)).toList();
-//   } else {
-//     throw Exception('Failed to Load album');
-//   }
-// }

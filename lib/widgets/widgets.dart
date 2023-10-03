@@ -1,3 +1,4 @@
+import 'package:currency_api_converter/constants/styles.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
@@ -9,7 +10,7 @@ class Header extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           heading,
-          style: const TextStyle(fontSize: 24),
+          style: $styles.text.bodyBold,
         ),
       );
 }
@@ -22,7 +23,7 @@ class Paragraph extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Text(
           content,
-          style: const TextStyle(fontSize: 18),
+          style: $styles.text.bodySmall.copyWith(fontSize: 15),
         ),
       );
 }
@@ -41,7 +42,12 @@ class IconAndDetail extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               detail,
-              style: const TextStyle(fontSize: 18),
+              // style: const TextStyle(
+              //   // fontSize: 18,
+              //   overflow: TextOverflow.ellipsis,
+              // ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             )
           ],
         ),

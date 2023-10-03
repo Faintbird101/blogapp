@@ -13,6 +13,8 @@ class ArticleWidget extends StatelessWidget {
   final String description;
   final void Function()? onPressed;
   final String? author;
+  final String? content;
+  final String? url;
 
   const ArticleWidget({
     Key? key,
@@ -22,44 +24,53 @@ class ArticleWidget extends StatelessWidget {
     required this.description,
     this.onPressed,
     this.author,
+    this.content,
+    this.url,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    return ListTile(
-      onTap: () {
-        Get.to(
-          () => DetailsPage(
-            article: ArticleModel(
-              author: author,
-              title: title,
-              description: description,
-              url: '',
-              urlToImage: imageUrl,
-              publishedAt: thumbnailUrl,
-              content: '',
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: ListTile(
+        // contentPadding: EdgeInsetsDirectional.all(8),
+        // tileColor: Colors.brown,
+        onTap: () {
+          Get.to(
+            () => DetailsPage(
+              article: ArticleModel(
+                author: author,
+                title: title,
+                description: description,
+                url: url,
+                urlToImage: imageUrl,
+                publishedAt: thumbnailUrl,
+                content: content,
+              ),
             ),
+          );
+        },
+        leading: _buildImage(context),
+        title: Text(
+          title,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: $styles.text.h5.copyWith(
+            fontSize: 18,
+            letterSpacing: 0.6,
+            wordSpacing: 0.3,
           ),
-        );
-      },
-      leading: _buildImage(context),
-      title: Text(
-        title,
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
-        style: $styles.text.h5.copyWith(
-          fontSize: 18,
-          letterSpacing: 0.6,
         ),
-      ),
-      subtitle: Text(
-        description,
-        maxLines: 2,
-        style: $styles.text.bodySmall.copyWith(fontWeight: FontWeight.w500),
-      ),
-      trailing: Text(
-        thumbnailUrl.substring(0, 9),
+        subtitle: Text(
+          description,
+          maxLines: 3,
+          style: $styles.text.bodySmall.copyWith(fontWeight: FontWeight.w500),
+        ),
+        trailing: Text(
+          thumbnailUrl.substring(0, 9),
+        ),
       ),
     );
     // Container(
@@ -83,12 +94,12 @@ class ArticleWidget extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       imageBuilder: (context, imageProvider) => Padding(
-        padding: const EdgeInsetsDirectional.only(end: 14),
+        padding: const EdgeInsetsDirectional.only(end: 5),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(5.0),
           child: Container(
-            width: MediaQuery.of(context).size.width / 3,
-            height: double.maxFinite,
+            width: MediaQuery.of(context).size.width / 4,
+            // height: MediaQuery.of(context).size.height / 2,
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.08),
               image: DecorationImage(image: imageProvider, fit: BoxFit.cover),

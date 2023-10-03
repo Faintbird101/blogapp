@@ -50,6 +50,8 @@ class _HomePageState extends State<HomePage> {
                   imageUrl: image.urlToImage!,
                   thumbnailUrl: image.publishedAt!,
                   author: image.author,
+                  content: image.content,
+                  url: image.url,
                 );
               },
             );
